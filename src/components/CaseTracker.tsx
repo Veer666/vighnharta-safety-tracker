@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -64,16 +65,7 @@ const CaseTracker = () => {
   const [caseDetails, setCaseDetails] = useState<CaseDetails | null>(null);
   const [error, setError] = useState('');
   
-  // Get query parameter from URL if present
-  useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    const idFromUrl = params.get('id');
-    if (idFromUrl) {
-      setCaseId(idFromUrl);
-      handleTrack(idFromUrl);
-    }
-  });
-  
+  // Define handleTrack function before using it in useEffect
   const handleTrack = async (id = caseId) => {
     if (!id) {
       toast.error("Please enter a valid case ID");
@@ -102,6 +94,16 @@ const CaseTracker = () => {
       setIsSearching(false);
     }, 1500);
   };
+  
+  // Use useEffect instead of useState for initialization logic
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const idFromUrl = params.get('id');
+    if (idFromUrl) {
+      setCaseId(idFromUrl);
+      handleTrack(idFromUrl);
+    }
+  }, []); // Empty dependency array means this runs once on mount
   
   const formatCaseIdInput = (value: string) => {
     // Format as VGH-XXXXXX
