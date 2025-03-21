@@ -132,109 +132,109 @@ const SOSButton = () => {
             isPressed ? "scale-[1.5] opacity-100" : "scale-100 opacity-0"
           )} />
           
-          {/* Main SOS button */}
-          <AlertDialogTrigger asChild>
-            <button
-              className={cn(
-                "relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-200",
-                "bg-gradient-to-br from-red-500 to-red-600 text-white",
-                isPressed 
-                  ? "scale-90 shadow-inner from-red-600 to-red-700" 
-                  : "hover:scale-105 hover:shadow-xl"
-              )}
-              onMouseDown={handlePressStart}
-              onMouseUp={handlePressEnd}
-              onMouseLeave={handlePressEnd}
-              onTouchStart={handlePressStart}
-              onTouchEnd={handlePressEnd}
-            >
-              <span className="sr-only">Emergency SOS</span>
-              <AlertTriangle className="h-8 w-8" />
+          {/* Main SOS button with AlertDialog wrapping */}
+          <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+            <AlertDialogTrigger asChild>
+              <button
+                className={cn(
+                  "relative w-16 h-16 rounded-full flex items-center justify-center shadow-lg transition-all duration-200",
+                  "bg-gradient-to-br from-red-500 to-red-600 text-white",
+                  isPressed 
+                    ? "scale-90 shadow-inner from-red-600 to-red-700" 
+                    : "hover:scale-105 hover:shadow-xl"
+                )}
+                onMouseDown={handlePressStart}
+                onMouseUp={handlePressEnd}
+                onMouseLeave={handlePressEnd}
+                onTouchStart={handlePressStart}
+                onTouchEnd={handlePressEnd}
+              >
+                <span className="sr-only">Emergency SOS</span>
+                <AlertTriangle className="h-8 w-8" />
+                
+                {/* Progress circle for long press */}
+                {isPressTimer && (
+                  <svg 
+                    className="absolute inset-0 w-full h-full -rotate-90" 
+                    viewBox="0 0 100 100"
+                  >
+                    <circle
+                      className="text-white/20"
+                      strokeWidth="4"
+                      stroke="currentColor"
+                      fill="transparent"
+                      r="46"
+                      cx="50"
+                      cy="50"
+                    />
+                    <circle
+                      className="text-white transition-all duration-100"
+                      strokeWidth="4"
+                      strokeDasharray={290}
+                      strokeDashoffset={290 - (290 * pressTime) / PRESS_THRESHOLD}
+                      strokeLinecap="round"
+                      stroke="currentColor"
+                      fill="transparent"
+                      r="46"
+                      cx="50"
+                      cy="50"
+                    />
+                  </svg>
+                )}
+              </button>
+            </AlertDialogTrigger>
+            
+            {/* Emergency confirmation dialog */}
+            <AlertDialogContent className="max-w-md glass-card border-destructive/20">
+              <AlertDialogHeader>
+                <AlertDialogTitle className="text-center flex items-center justify-center gap-2">
+                  <AlertTriangle className="h-5 w-5 text-destructive" />
+                  <span>Emergency Assistance</span>
+                </AlertDialogTitle>
+                <AlertDialogDescription className="text-center">
+                  This will send an emergency alert with your current location to the nearest police station and headquarters.
+                </AlertDialogDescription>
+              </AlertDialogHeader>
               
-              {/* Progress circle for long press */}
-              {isPressTimer && (
-                <svg 
-                  className="absolute inset-0 w-full h-full -rotate-90" 
-                  viewBox="0 0 100 100"
-                >
-                  <circle
-                    className="text-white/20"
-                    strokeWidth="4"
-                    stroke="currentColor"
-                    fill="transparent"
-                    r="46"
-                    cx="50"
-                    cy="50"
-                  />
-                  <circle
-                    className="text-white transition-all duration-100"
-                    strokeWidth="4"
-                    strokeDasharray={290}
-                    strokeDashoffset={290 - (290 * pressTime) / PRESS_THRESHOLD}
-                    strokeLinecap="round"
-                    stroke="currentColor"
-                    fill="transparent"
-                    r="46"
-                    cx="50"
-                    cy="50"
-                  />
-                </svg>
+              {location && (
+                <div className="my-4 p-3 bg-muted/50 rounded-md">
+                  <div className="flex items-center gap-2 text-sm">
+                    <MapPin className="h-4 w-4 text-muted-foreground" />
+                    <span>
+                      Location: {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
+                    </span>
+                  </div>
+                </div>
               )}
-            </button>
-          </AlertDialogTrigger>
+              
+              <AlertDialogFooter className="flex flex-col sm:flex-row gap-2">
+                <AlertDialogCancel className="mt-0">Cancel</AlertDialogCancel>
+                <AlertDialogAction
+                  className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
+                  onClick={sendEmergencyAlert}
+                  disabled={isSending}
+                >
+                  {isSending ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Sending Alert...
+                    </>
+                  ) : (
+                    <>
+                      <AlertTriangle className="mr-2 h-4 w-4" />
+                      Send Emergency Alert
+                    </>
+                  )}
+                </AlertDialogAction>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
         
         <span className="block text-center text-xs mt-2 font-medium text-muted-foreground">
           Hold for SOS
         </span>
       </div>
-      
-      {/* Emergency confirmation dialog */}
-      <AlertDialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-        <AlertDialogContent className="max-w-md glass-card border-destructive/20">
-          <AlertDialogHeader>
-            <AlertDialogTitle className="text-center flex items-center justify-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-destructive" />
-              <span>Emergency Assistance</span>
-            </AlertDialogTitle>
-            <AlertDialogDescription className="text-center">
-              This will send an emergency alert with your current location to the nearest police station and headquarters.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          
-          {location && (
-            <div className="my-4 p-3 bg-muted/50 rounded-md">
-              <div className="flex items-center gap-2 text-sm">
-                <MapPin className="h-4 w-4 text-muted-foreground" />
-                <span>
-                  Location: {location.lat.toFixed(6)}, {location.lng.toFixed(6)}
-                </span>
-              </div>
-            </div>
-          )}
-          
-          <AlertDialogFooter className="flex flex-col sm:flex-row gap-2">
-            <AlertDialogCancel className="mt-0">Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
-              onClick={sendEmergencyAlert}
-              disabled={isSending}
-            >
-              {isSending ? (
-                <>
-                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending Alert...
-                </>
-              ) : (
-                <>
-                  <AlertTriangle className="mr-2 h-4 w-4" />
-                  Send Emergency Alert
-                </>
-              )}
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </>
   );
 };
