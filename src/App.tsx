@@ -11,6 +11,7 @@ import SOSButton from "./components/SOSButton";
 const Index = lazy(() => import("./pages/Index"));
 const FIRForm = lazy(() => import("./components/FIRForm"));
 const CaseTracker = lazy(() => import("./components/CaseTracker"));
+const LegalAssistant = lazy(() => import("./pages/LegalAssistant"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const NavBar = lazy(() => import("./components/NavBar"));
 
@@ -48,6 +49,7 @@ const App = () => {
                     <CaseTracker />
                   </div>
                 } />
+                <Route path="/legal-assistant" element={<LegalAssistant />} />
                 <Route path="/emergency" element={
                   <div className="container mx-auto p-4 py-8">
                     <div className="max-w-3xl mx-auto text-center">
