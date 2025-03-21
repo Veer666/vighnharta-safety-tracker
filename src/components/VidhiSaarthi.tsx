@@ -55,23 +55,23 @@ const VidhiSaarthi: React.FC = () => {
     }
     
     // Check for IPC sections from imported knowledge base
-    for (const [section, info] of Object.entries(ipcSections)) {
-      if (lowerQuery.includes(section)) {
-        return `IPC ${section}: ${info}`;
+    for (const section of ipcSections) {
+      if (lowerQuery.includes(section.number)) {
+        return `IPC ${section.number}: ${section.title} - ${section.description}${section.punishment ? ' Punishment: ' + section.punishment : ''}`;
       }
     }
     
     // Check for CrPC sections from imported knowledge base
-    for (const [section, info] of Object.entries(crpcSections)) {
-      if (lowerQuery.includes(section)) {
-        return `CrPC ${section}: ${info}`;
+    for (const section of crpcSections) {
+      if (lowerQuery.includes(section.number)) {
+        return `CrPC ${section.number}: ${section.title} - ${section.description}`;
       }
     }
     
     // Check for legal procedures from imported knowledge base
-    for (const [procedure, info] of Object.entries(legalProcedures)) {
-      if (lowerQuery.includes(procedure)) {
-        return info;
+    for (const [key, procedure] of Object.entries(legalProcedures)) {
+      if (lowerQuery.includes(key.replace('_', ' '))) {
+        return `${procedure.title}:\n${procedure.steps.map((step, index) => `${index + 1}. ${step}`).join('\n')}`;
       }
     }
     
