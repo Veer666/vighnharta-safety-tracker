@@ -6,6 +6,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SOSButton from "./components/SOSButton";
+import FloatingVidhiSaarthi from "./components/FloatingVidhiSaarthi";
 
 // Lazy-loaded pages
 const Index = lazy(() => import("./pages/Index"));
@@ -68,6 +69,8 @@ const App = () => {
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </div>
+            <SOSButton />
+            <FloatingVidhiSaarthi />
           </Suspense>
         </BrowserRouter>
       </TooltipProvider>

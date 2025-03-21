@@ -3,9 +3,12 @@ import React, { useState, useRef } from 'react';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { SendIcon, RefreshCcw, Trash2 } from "lucide-react";
+import { SendIcon, RefreshCcw, Trash2, Bot, X } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ipcSections, crpcSections, legalProcedures } from "@/lib/legal-knowledge";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { motion } from "framer-motion";
 
 // Define the message structure
 interface Message {
@@ -15,7 +18,11 @@ interface Message {
   timestamp: Date;
 }
 
-const VidhiSaarthi: React.FC = () => {
+interface VidhiSaarthiProps {
+  floatingMode?: boolean;
+}
+
+const VidhiSaarthi: React.FC<VidhiSaarthiProps> = ({ floatingMode = false }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -26,6 +33,7 @@ const VidhiSaarthi: React.FC = () => {
   ]);
   const [input, setInput] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const endOfMessagesRef = useRef<HTMLDivElement>(null);
   const { toast } = useToast();
 
@@ -139,7 +147,8 @@ const VidhiSaarthi: React.FC = () => {
     });
   };
 
-  return (
+  // Render the full chat interface
+  const renderChatInterface = () => (
     <Card className="flex flex-col h-[500px] max-w-3xl mx-auto">
       <CardHeader className="bg-primary/5 border-b">
         <CardTitle className="flex items-center gap-2">
@@ -220,6 +229,37 @@ const VidhiSaarthi: React.FC = () => {
       </CardFooter>
     </Card>
   );
+
+  // Render floating button and sheet for mobile
+  const renderFloatingButton = () => (
+    <Sheet open={isOpen} onOpenChange={setIsOpen}>
+      <SheetTrigger asChild>
+        <motion.button
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          whileHover={{ scale: 1.05 }}
+          className="fixed left-6 bottom-20 z-50 w-14 h-14 rounded-full bg-primary text-white shadow-lg flex items-center justify-center"
+        >
+          <div className="relative">
+            <div className="absolute inset-0 rounded-full bg-primary/20 animate-ping-subtle"></div>
+            <div className="relative w-14 h-14 rounded-full bg-gradient-to-br from-violet-500 to-primary flex items-center justify-center overflow-hidden border-2 border-white">
+              <Bot className="h-7 w-7" />
+            </div>
+          </div>
+        </motion.button>
+      </SheetTrigger>
+      <SheetContent side="bottom" className="h-[80vh] pt-10 px-0 sm:max-w-none">
+        <div className="h-full flex flex-col overflow-hidden">
+          <div className="h-full overflow-auto pb-16">
+            {renderChatInterface()}
+          </div>
+        </div>
+      </SheetContent>
+    </Sheet>
+  );
+
+  // Return appropriate UI based on mode
+  return floatingMode ? renderFloatingButton() : renderChatInterface();
 };
 
 export default VidhiSaarthi;

@@ -7,7 +7,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import AuthForm from '@/components/AuthForm';
 import SOSButton from '@/components/SOSButton';
-import VidhiSaarthi from '@/components/VidhiSaarthi';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -57,17 +56,6 @@ const Index = () => {
           </p>
         </motion.div>
         
-        {/* VidhiSaarthi AI Assistant */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
-          className="mb-12"
-        >
-          <h2 className="text-2xl font-medium text-center mb-6">Your Legal Assistant</h2>
-          <VidhiSaarthi />
-        </motion.div>
-        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           <FeatureCard
             icon={FileText}
@@ -109,8 +97,6 @@ const Index = () => {
           </p>
         </motion.div>
       </main>
-      
-      <SOSButton />
     </div>
   );
 };

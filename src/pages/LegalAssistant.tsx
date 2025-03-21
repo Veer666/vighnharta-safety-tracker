@@ -11,7 +11,7 @@ const LegalAssistantPage: React.FC = () => {
           Ask questions about Indian law, including IPC and CrPC sections. Get simple explanations for legal procedures and advice for common situations.
         </p>
       </div>
-      <VidhiSaarthi />
+      <VidhiSaarthi floatingMode={false} />
       <div className="mt-6 text-center text-sm text-muted-foreground">
         <p>Disclaimer: VidhiSaarthi provides general legal information based on Indian law. This is not a substitute for professional legal advice.</p>
       </div>
