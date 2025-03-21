@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { SendIcon, RefreshCcw, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { ipcSections, crpcSections, legalProcedures } from "@/lib/legal-knowledge";
 
 // Define the message structure
 interface Message {
@@ -34,7 +35,7 @@ const VidhiSaarthi: React.FC = () => {
     'ipc 302': 'IPC Section 302 deals with punishment for murder. It is punishable with death or imprisonment for life and fine.',
     'ipc 376': 'IPC Section 376 deals with punishment for rape. It is punishable with rigorous imprisonment for a term not less than 10 years, but which may extend to imprisonment for life and fine.',
     'fir': 'FIR (First Information Report) is a written document prepared by police when they receive information about a cognizable offense. Steps to file an FIR:\n1. Visit the police station in whose jurisdiction the offense occurred\n2. Provide details of the incident\n3. Get a copy of the FIR',
-    'bail': 'Bail is the temporary release of an accused person awaiting trial. Process:\n1. File bail application in appropriate court\n2. For bailable offenses, bail is a matter of right\n3. For non-bailable offenses, it's at court's discretion based on factors like severity of crime and flight risk',
+    'bail': 'Bail is the temporary release of an accused person awaiting trial. Process:\n1. File bail application in appropriate court\n2. For bailable offenses, bail is a matter of right\n3. For non-bailable offenses, it\'s at court\'s discretion based on factors like severity of crime and flight risk',
   };
 
   // Function to scroll to the bottom of the chat
