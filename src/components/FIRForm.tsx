@@ -8,7 +8,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { toast } from "sonner";
 import { AlertDialog, AlertDialogAction, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle } from "@/components/ui/alert-dialog";
-import { MapPin, Calendar, Clock, Save, Loader2 } from 'lucide-react';
+import { MapPin, Calendar, Clock, Save, Loader2, Check } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
 // FIR categories

@@ -5,7 +5,6 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import NavBar from "./components/NavBar";
 import SOSButton from "./components/SOSButton";
 
 // Lazy-loaded pages
@@ -13,6 +12,7 @@ const Index = lazy(() => import("./pages/Index"));
 const FIRForm = lazy(() => import("./components/FIRForm"));
 const CaseTracker = lazy(() => import("./components/CaseTracker"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const NavBar = lazy(() => import("./components/NavBar"));
 
 // Loading fallback
 const PageLoading = () => (
@@ -31,8 +31,8 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <NavBar />
         <Suspense fallback={<PageLoading />}>
+          <NavBar />
           <div className="pt-16"> {/* Add padding to account for fixed navbar */}
             <Routes>
               <Route path="/" element={<Index />} />
