@@ -7,6 +7,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { useNavigate } from 'react-router-dom';
 import AuthForm from '@/components/AuthForm';
 import SOSButton from '@/components/SOSButton';
+import VidhiSaarthi from '@/components/VidhiSaarthi';
 
 const Index = () => {
   const navigate = useNavigate();
@@ -40,12 +41,12 @@ const Index = () => {
   
   return (
     <div className="min-h-screen flex flex-col">
-      <main className="flex-1 container mx-auto px-4 py-24">
+      <main className="flex-1 container mx-auto px-4 py-12">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: [0.25, 0.1, 0.25, 1] }}
-          className="text-center mb-16"
+          className="text-center mb-12"
         >
           <div className="inline-block rounded-full bg-primary/10 p-3 mb-4">
             <Shield className="h-8 w-8 text-primary" />
@@ -54,6 +55,17 @@ const Index = () => {
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             A streamlined FIR management system designed for the digital age
           </p>
+        </motion.div>
+        
+        {/* VidhiSaarthi AI Assistant */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.1, ease: [0.25, 0.1, 0.25, 1] }}
+          className="mb-12"
+        >
+          <h2 className="text-2xl font-medium text-center mb-6">Your Legal Assistant</h2>
+          <VidhiSaarthi />
         </motion.div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">

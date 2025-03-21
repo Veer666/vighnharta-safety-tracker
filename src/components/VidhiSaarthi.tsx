@@ -54,6 +54,27 @@ const VidhiSaarthi: React.FC = () => {
       }
     }
     
+    // Check for IPC sections from imported knowledge base
+    for (const [section, info] of Object.entries(ipcSections)) {
+      if (lowerQuery.includes(section)) {
+        return `IPC ${section}: ${info}`;
+      }
+    }
+    
+    // Check for CrPC sections from imported knowledge base
+    for (const [section, info] of Object.entries(crpcSections)) {
+      if (lowerQuery.includes(section)) {
+        return `CrPC ${section}: ${info}`;
+      }
+    }
+    
+    // Check for legal procedures from imported knowledge base
+    for (const [procedure, info] of Object.entries(legalProcedures)) {
+      if (lowerQuery.includes(procedure)) {
+        return info;
+      }
+    }
+    
     // Check for common legal questions
     if (lowerQuery.includes('file complaint') || lowerQuery.includes('police complaint')) {
       return 'To file a police complaint:\n1. Visit the nearest police station\n2. Write a clear statement of the incident\n3. Ensure you get an acknowledgment receipt\n4. If the police refuse to file an FIR for a cognizable offense, you can approach the Superintendent of Police or file a complaint with the Magistrate under CrPC Section 156(3).';
@@ -119,7 +140,7 @@ const VidhiSaarthi: React.FC = () => {
   };
 
   return (
-    <Card className="flex flex-col h-[700px] max-w-3xl mx-auto">
+    <Card className="flex flex-col h-[500px] max-w-3xl mx-auto">
       <CardHeader className="bg-primary/5 border-b">
         <CardTitle className="flex items-center gap-2">
           <span className="text-primary font-semibold">विधि साथी</span> | 
