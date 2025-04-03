@@ -1,2 +1,2 @@
-## Welcome to Vignharta project by Daksh, Hadi and Aaryan.
+## Welcome to Vignharta project by Daksh, Hadi and Aaryan Sehgal.
 
